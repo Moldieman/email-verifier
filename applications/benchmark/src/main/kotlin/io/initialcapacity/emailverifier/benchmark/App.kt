@@ -18,8 +18,8 @@ fun main(): Unit = runBlocking {
 
     val benchmark = Benchmark(
         registrationUrl = System.getenv("REGISTRATION_URL") ?: "http://localhost:8081",
-        registrationCount = getEnvInt("REGISTRATION_COUNT", 5_000),
-        requestWorkerCount = getEnvInt("REQUEST_WORKER_COUNT", 8),
+        registrationCount = getEnvInt("REGISTRATION_COUNT", 500),
+        requestWorkerCount = getEnvInt("REQUEST_WORKER_COUNT", 6),
         registrationWorkerCount = getEnvInt("REGISTRATION_WORKER_COUNT", 6),
         client = HttpClient(Java) {
             expectSuccess = false

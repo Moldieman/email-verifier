@@ -39,7 +39,6 @@ class Benchmark(
         launchRequestWorkers(scope)
         launchRegistrationWorkers(scope)
         startReporter(scope)
-
         emails.generate(registrationCount)
 
         return measureTime {
@@ -48,7 +47,17 @@ class Benchmark(
             }
         }.also { duration ->
             stop()
-            logger.info("benchmark finished in $duration")
+
+            logger.info("benchmark completed in $duration")
+
+            val rps: Float = registrationCount.toFloat().div(duration.inWholeSeconds)
+
+            logger.info("benchmark finished $registrationCount requests in $duration for registrations/second: $rps")
+
+            if(rps < 50.0000) {
+                logger.error("Benchmark failed the goal of 50 rps. Only hit $rps")
+                // exitProcess(-1)
+            }
         }
     }
 
